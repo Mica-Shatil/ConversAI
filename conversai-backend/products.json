@@ -1,0 +1,219 @@
+[
+    {
+      "id": 1,
+      "p_name": "Basic Quarter Zip Sweatshirt",
+      "description": "A stylish and comfortable sweatshirt with a quarter zip design, perfect for casual wear.",
+      "price": 59.9,
+      "picture_url": "https://static.zara.net/assets/public/d26d/9320/a62748f59f73/43e8b0ec71c2/06462433800-e1/06462433800-e1.jpg?ts=1739197201844&w=1500",
+      "product_link": "https://www.zara.com/ca/en/basic-quarter-zip-sweatshirt-p06462333.html?v1=410585691&v2=2458839"
+    },
+    {
+      "id": 2,
+      "p_name": "Baggy Fit Jeans",
+      "description": "Relaxed, baggy-fit jeans that offer both comfort and a trendy look.",
+      "price": 89,
+      "picture_url": "https://static.zara.net/assets/public/b67c/0ee3/fe534558b84e/6e0f3c5e849d/04048400822-e1/04048400822-e1.jpg?ts=1734946681580&w=1500",
+      "product_link": "https://www.zara.com/ca/en/baggy-fit-jeans-p04048400.html?v1=435247467&v2=2458839"
+    },
+    {
+      "id": 3,
+      "p_name": "100% Linen Shirt",
+      "description": "A lightweight, breathable 100% linen shirt perfect for warm days.",
+      "price": 79,
+      "picture_url": "https://static.zara.net/assets/public/c23b/b00e/f48d49f6bcf6/28a333d03e17/05070123052-e1/05070123052-e1.jpg?ts=1736432624416&w=1500",
+      "product_link": "https://www.zara.com/ca/en/100-linen-shirt-p03090123.html?v1=416700738&v2=2458839"
+    },
+    {
+      "id": 4,
+      "p_name": "Baggy Fit Jeans (Alternate)",
+      "description": "Another style of baggy fit jeans offering a relaxed silhouette and modern style.",
+      "price": 89,
+      "picture_url": "https://static.zara.net/assets/public/d15f/14c0/88514fb8b7f1/2b8b2414f632/04806401800-e1/04806401800-e1.jpg?ts=1734946681063&w=1500",
+      "product_link": "https://www.zara.com/ca/en/baggy-fit-jeans-p04048400.html?v1=435247468&v2=2458839"
+    },
+    {
+      "id": 5,
+      "p_name": "Embossed Leather Boots",
+      "description": "High-quality embossed leather boots that combine style with durability.",
+      "price": 149,
+      "picture_url": "https://static.zara.net/assets/public/3b0c/7e56/73714e94bce7/0ceadfbaab63/12040520800-e1/12040520800-e1.jpg?ts=1732089901713&w=2048",
+      "product_link": "https://www.zara.com/ca/en/embossed-leather-boots-p12040520.html?v1=411119275&v2=2458839"
+    },
+    {
+      "id": 6,
+      "p_name": "Slim Fit Suit Jacket",
+      "description": "A tailored slim fit suit jacket ideal for formal events and business wear.",
+      "price": 149,
+      "picture_url": "https://static.zara.net/assets/public/46d8/e129/d9fc4963a646/5f3f367e53ce/04425254081-e1/04425254081-e1.jpg?ts=1740474162692&w=1500",
+      "product_link": "https://www.zara.com/ca/en/slim-fit-suit-jacket-p04425254.html?v1=433286471&v2=2458839"
+    },
+    {
+      "id": 7,
+      "p_name": "Suede Leather Jacket",
+      "description": "A stylish suede leather jacket that makes a statement for any season.",
+      "price": 249,
+      "picture_url": "https://static.zara.net/assets/public/bcac/2c05/48ab49de957e/bc5325877df4/08281638500-e1/08281638500-e1.jpg?ts=1737456471136&w=1500",
+      "product_link": "https://www.zara.com/ca/en/suede-leather-jacket-p08281638.html?v1=410585208&v2=2458839"
+    },
+    {
+      "id": 8,
+      "p_name": "Textured Boucle Wool Coat",
+      "description": "A warm and elegant wool coat with a textured boucle finish.",
+      "price": 319,
+      "picture_url": "https://static.zara.net/assets/public/fff0/d599/6acd4b2eb87b/a35c9cbbca11/09621160800-e1/09621160800-e1.jpg?ts=1733309053832&w=1500",
+      "product_link": "https://www.zara.com/ca/en/textured-boucle-wool-coat-p09621160.html?v1=421873987&v2=2458839"
+    },
+    {
+      "id": 9,
+      "p_name": "Stretch Suit Pants",
+      "description": "A pair of comfortable, stretchy suit pants designed for a sharp look.",
+      "price": 99,
+      "picture_url": "https://static.zara.net/assets/public/4f29/cd65/7c9448d0a0b7/a3847cfc5cb8/01564301800-e1/01564301800-e1.jpg?ts=1723200206299&w=1500",
+      "product_link": "https://www.zara.com/ca/en/stretch-suit-pants-p01564301.html?v1=413803579&v2=2458839"
+    },
+    {
+      "id": 10,
+      "p_name": "Tie-Detail Maxi Dress",
+      "description": "A trendy printed T-shirt that combines style with comfort.",
+      "price": 35,
+      "picture_url": "https://image.hm.com/assets/hm/13/c1/13c17ec9fcdd717e667a5347c22da2407d71957a.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1269443005.html"
+    },
+    {
+      "id": 11,
+      "p_name": "Linen-Blend Pants",
+      "description": "A cozy sweater crafted from a soft cotton blend, perfect for cooler days.",
+      "price": 35,
+      "picture_url": "https://image.hm.com/assets/hm/2f/9e/2f9e3e25e5e0d75bd1e7314dd6ae6114b317a65a.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1259065006.html"
+    },
+    {
+      "id": 12,
+      "p_name": "Linen-Blend Shirt Dress",
+      "description": "An elegant printed blouse that adds a pop of color to your wardrobe.",
+      "price": 50,
+      "picture_url": "https://image.hm.com/assets/hm/b5/e8/b5e83b793499a47d760fe946514fe1f2b511bed9.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1275768001.html"
+    },
+    {
+      "id": 13,
+      "p_name": "Blouse with Pintucks",
+      "description": "A classic denim jacket with a modern twist, perfect for layering.",
+      "price": 40,
+      "picture_url": "https://image.hm.com/assets/hm/38/70/3870ccd4b5bb9cc1daf9fa81f0be518fd38341ab.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1282025001.html"
+    },
+    {
+      "id": 14,
+      "p_name": "Linen-Blend Pants",
+      "description": "A sharp printed shirt that balances comfort and style for everyday wear.",
+      "price": 35,
+      "picture_url": "https://image.hm.com/assets/hm/e3/78/e37845ef2d55bf311dd6892648da218a41b632e9.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1259065015.html"
+    },
+    {
+      "id": 15,
+      "p_name": "Ballet Flats",
+      "description": "A structured blazer that adds a sophisticated touch to any outfit.",
+      "price": 30,
+      "picture_url": "https://image.hm.com/assets/hm/c9/fb/c9fb81cbdf2129737ae2ea518e1f506aec4baccf.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1270485002.html"
+    },
+    {
+      "id": 16,
+      "p_name": "H&M Pleated Skirt",
+      "description": "A stylish pleated skirt perfect for both casual and dressier occasions.",
+      "price": 30,
+      "picture_url": "https://image.hm.com/assets/hm/72/4b/724bd1d8ecac84762f90e4bdb248773a00a7efb6.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1285169002.html"
+    },
+    {
+      "id": 17,
+      "p_name": "Muslin Bathrobe",
+      "description": "A pair of comfortable and versatile chino pants for everyday style.",
+      "price": 45,
+      "picture_url": "https://image.hm.com/assets/hm/90/f6/90f619b1971c88455bc4768f576142786b963930.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1206055013.html"
+    },
+    {
+      "id": 18,
+      "p_name": "Densely Knit Cardigan",
+      "description": "A classic cotton shirt with a relaxed fit, perfect for any casual occasion.",
+      "price": 45,
+      "picture_url": "https://image.hm.com/assets/hm/4b/8e/4b8e06e1a7327836f704dd808113a979a9dfd09c.jpg?imwidth=2160",
+      "product_link": "https://www2.hm.com/en_ca/productpage.1278168001.html"
+    },
+    {
+      "id": 19,
+      "p_name": "Wrinkled Look Blazer",
+      "description": "A uniquely styled blazer with a casual, relaxed look. Perfect for a modern, off-duty vibe.",
+      "price": 79.9,
+      "picture_url": "https://static.zara.net/assets/public/5fda/513d/ca484c58b8f8/93742a23ca44/04387130172-e1/04387130172-e1.jpg?ts=1741626769806&w=1500",
+      "product_link": "https://www.zara.com/ca/en/wrinkled-look-blazer-p04387130.html?v1=422660395&v2=2420945"
+    },
+    {
+      "id": 20,
+      "p_name": "Blazer with Rolled-Up Sleeves",
+      "description": "A modern blazer featuring stylish rolled-up sleeves for a contemporary twist.",
+      "price": 79.9,
+      "picture_url": "https://static.zara.net/assets/public/7500/b421/1d2e4231b0bc/e14ae0e8cb0b/02226518800-e1/02226518800-e1.jpg?ts=1740750845185&w=1500",
+      "product_link": "https://www.zara.com/ca/en/blazer-with-rolled-up-sleeves-p02226518.html?v1=446323560&v2=2420945"
+    },
+    {
+      "id": 21,
+      "p_name": "Combination 100% Suede Leather Jacket with Pleat",
+      "description": "A statement leather jacket crafted in 100% suede with a distinctive pleated detail.",
+      "price": 319,
+      "picture_url": "https://static.zara.net/assets/public/46d8/e129/d9fc4963a646/5f3f367e53ce/04425254081-e1/04425254081-e1.jpg?ts=1740474162692&w=1500",
+      "product_link": "https://www.zara.com/ca/en/slim-fit-suit-jacket-p04425254.html?v1=433286471&v2=2458839"
+    },
+    {
+      "id": 22,
+      "p_name": "Oversized Suede Combination Jacket",
+      "description": "An oversized jacket in suede with a combination of textures for an edgy look.",
+      "price": 319,
+      "picture_url": "https://static.zara.net/assets/public/1487/e59e/b5754069ae7e/bacbf0760fc7/04341875482-e1/04341875482-e1.jpg?ts=1739531896263&w=2048",
+      "product_link": "https://www.zara.com/ca/en/oversized-suede-combination-jacket-p04341875.html?v1=443090257&v2=2417740"
+    },
+    {
+      "id": 23,
+      "p_name": "Leather Jacket ZW Collection",
+      "description": "A refined leather jacket from Zara’s ZW Collection, merging classic design with modern aesthetics.",
+      "price": 429,
+      "picture_url": "https://static.zara.net/assets/public/97f1/b70a/62e24eb492e5/39d1f52c68c8/05479045681-e1/05479045681-e1.jpg?ts=1736350984813&w=1500",
+      "product_link": "https://www.zara.com/ca/en/leather-jacket-zw-collection-p05479045.html?v1=431929849&v2=2417740"
+    },
+    {
+      "id": 24,
+      "p_name": "Soft Ankle Length Pants",
+      "description": "Elegant pants with a soft finish and ankle length, ideal for both casual and office wear.",
+      "price": 79,
+      "picture_url": "https://static.zara.net/assets/public/1478/644/800/2/w/563/1478644800_15_1_1.jpg?ts=1684258442320",
+      "product_link": "https://www.zara.com/ca/en/soft-ankle-length-pants-p01478644.html?v1=446323558&v2=2420799"
+    },
+    {
+      "id": 25,
+      "p_name": "Pants with a High Waist",
+      "description": "A sleek pair of high-waisted pants designed to flatter your silhouette.",
+      "price": 69,
+      "picture_url": "https://static.zara.net/assets/public/d26e/1c75/6b9e4e1c8e58/b14f594f2093/09929132800-e1/09929132800-e1.jpg?ts=1741173791437&w=1500",
+      "product_link": "https://www.zara.com/ca/en/pants-with-a-high-waist-p09929132.html?v1=435685522&v2=2420799"
+    },
+    {
+      "id": 26,
+      "p_name": "TRF High-Waisted Wide-Leg Jeans",
+      "description": "Comfortable and stylish wide-leg jeans with a high waist, perfect for a relaxed look.",
+      "price": 70,
+      "picture_url": "https://static.zara.net/assets/public/3dc3/0d44/ceae40679e53/2e22f6082c1c/04365032401-e1/04365032401-e1.jpg?ts=1741795863323&w=1500",
+      "product_link": "https://www.zara.com/ca/en/trf-high-waisted-wide-leg-jeans-p04365032.html?v1=439806461&v2=2491343"
+    },
+    {
+      "id": 27,
+      "p_name": "Long Halter Ruched Dress",
+      "description": "An elegant long dress with a halter neckline and ruched detailing, ideal for special occasions.",
+      "price": 66,
+      "picture_url": "https://static.zara.net/assets/public/ca68/4e38/30304daa95de/c7a11df8e5eb/05039325407-e1/05039325407-e1.jpg?ts=1741279054000&w=1500",
+      "product_link": "https://www.zara.com/ca/en/long-halter-ruched-dress-p05039325.html?v1=428613692&v2=2491343"
+    }
+  ]
+  

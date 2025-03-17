@@ -1,96 +1,178 @@
-import { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
-import { PaperAirplaneIcon } from "@heroicons/react/solid";
 
 function Chatbot() {
   const [messages, setMessages] = useState([
-    { text: "👋 Hello! What are you looking for today?", sender: "bot", images: [] },
+    {
+      sender: "bot",
+      text: "👋 Hi there! I'm ConversAI, your personal fashion assistant. How can I help you today?",
+      images: [],
+    },
   ]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
+  const [recommendedProducts, setRecommendedProducts] = useState([]);
+  const messagesEndRef = useRef(null);
+
+  // Auto-scroll to the bottom when messages update
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const addMessage = (sender, text, images = []) => {
+    setMessages((prev) => [...prev, { sender, text, images }]);
+  };
+
+  // Use user input as the query for recommendations
+  const extractQuery = (text) => text.toLowerCase();
+
+  // Fetch matching product recommendations from backend
+  const fetchRecommendations = async (query) => {
+    try {
+      const res = await axios.get("http://127.0.0.1:5050/api/recommendations", {
+        params: { query },
+      });
+      if (res.data && res.data.products) {
+        setRecommendedProducts(res.data.products);
+      } else {
+        setRecommendedProducts([]);
+      }
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+      setRecommendedProducts([]);
+    }
+  };
 
   const sendMessage = async () => {
     if (!input.trim()) return;
+    const userInput = input;
+    setInput(""); // Clear input immediately
 
-    const userMessage = { text: input, sender: "user", images: [] };
-    setMessages((prevMessages) => [...prevMessages, userMessage]);
-    setInput("");
+    addMessage("user", userInput);
     setIsTyping(true);
-
     try {
-      const response = await axios.post("http://127.0.0.1:5000/chat", { message: input });
+      const res = await axios.post("http://127.0.0.1:5050/chat", {
+        message: userInput,
+      });
+      const { response, images } = res.data;
+      addMessage("bot", response, images);
 
-      const botResponse = {
-        text: response.data.response,
-        sender: "bot",
-        images: response.data.images || [], // Now images are full URLs
-      };
-
-      setTimeout(() => {
-        setMessages((prevMessages) => [...prevMessages, botResponse]);
-        setIsTyping(false);
-      }, 1000);
+      // Use the user input as the query to filter available products.
+      const query = extractQuery(userInput);
+      if (query) {
+        await fetchRecommendations(query);
+      } else {
+        setRecommendedProducts([]);
+      }
     } catch (error) {
-      console.error("Error fetching chatbot response:", error);
-      setMessages((prevMessages) => [
-        { text: "❌ Oops! Something went wrong.", sender: "bot", images: [] }
-      ]);
+      console.error("Error contacting backend:", error);
+      addMessage("bot", "❌ Sorry, something went wrong on my end.", []);
+      setRecommendedProducts([]);
+    } finally {
       setIsTyping(false);
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  };
+
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gradient-to-br from-blue-900 to-gray-900 text-white">
-      <div className="max-w-2xl w-full bg-gray-800 shadow-lg rounded-lg overflow-hidden mt-10">
-        <div className="p-5 bg-gray-900 text-center text-xl font-semibold">🛍️ ConversAI Shopping Assistant</div>
-        <div className="h-96 overflow-y-auto p-5 space-y-4">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex ${msg.sender === "bot" ? "justify-start" : "justify-end"}`}>
-              {msg.sender === "bot" && (
-                <img src="https://i.imgur.com/8Km9tLL.png" alt="Bot" className="w-8 h-8 rounded-full mr-2" />
-              )}
-              <div className={`p-3 rounded-lg max-w-xs ${msg.sender === "bot" ? "bg-blue-600 text-white" : "bg-gray-300 text-gray-900"}`}>
-                {msg.text}
-              </div>
-            </div>
-          ))}
+    <div className="max-w-3xl mx-auto my-8 bg-white rounded-xl shadow-lg overflow-hidden">
+      {/* Chat Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center p-6 font-bold text-2xl">
+        ConversAI Fashion Chat
+      </div>
 
-          {/* Display Images for Bot Responses */}
-          {messages.map((msg, index) =>
-            msg.sender === "bot" && msg.images.length > 0 ? (
-              <div key={`img-${index}`} className="flex flex-wrap mt-2">
-                {msg.images.map((image, imgIndex) => (
-                  <img
-                    key={imgIndex}
-                    src={image}
-                    alt="Suggested Product"
-                    className="w-24 h-24 object-cover rounded-lg m-1 border border-gray-500"
-                  />
-                ))}
-              </div>
-            ) : null
-          )}
-
-          {isTyping && (
-            <div className="flex items-center space-x-2">
-              <img src="https://i.imgur.com/8Km9tLL.png" alt="Bot" className="w-8 h-8 rounded-full" />
-              <div className="animate-pulse bg-blue-500 px-3 py-1 rounded-lg">...</div>
+      {/* Chat Messages */}
+      <div className="p-6 space-y-4 h-[800px] overflow-y-auto bg-gray-50">
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={`flex items-start ${msg.sender === "bot" ? "justify-start" : "justify-end"}`}
+          >
+            {msg.sender === "bot" && (
+              <img
+                src="https://i.imgur.com/8Km9tLL.png"
+                alt="Bot Avatar"
+                className="w-10 h-10 rounded-full mr-3"
+              />
+            )}
+            <div
+              className={`rounded-lg p-4 max-w-xs break-words ${
+                msg.sender === "bot"
+                  ? "bg-blue-600 text-white rounded-tl-none"
+                  : "bg-gray-200 text-gray-800 rounded-tr-none"
+              }`}
+            >
+              {msg.text}
             </div>
-          )}
+          </div>
+        ))}
+
+        {/* Typing Indicator */}
+        {isTyping && (
+          <div className="flex items-center mt-2">
+            <img
+              src="https://i.imgur.com/8Km9tLL.png"
+              alt="Bot Avatar"
+              className="w-10 h-10 rounded-full mr-3"
+            />
+            <div className="bg-blue-500 text-white px-4 py-2 rounded-lg animate-pulse">
+              Typing...
+            </div>
+          </div>
+        )}
+        <div ref={messagesEndRef} />
+      </div>
+
+      {/* Recommended Products Section */}
+      {recommendedProducts.length > 0 && (
+        <div className="p-6 bg-gray-100 border-t border-gray-300">
+          <h2 className="text-xl font-bold mb-4">Recommended Products</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {recommendedProducts.map((product) => (
+              <div key={product.id} className="flex items-center space-x-4 border p-4 rounded shadow">
+                <img
+                  src={product.picture_url}
+                  alt={product.p_name}
+                  className="w-24 h-24 object-cover rounded"
+                />
+                <div>
+                  <h3 className="text-2xl font-semibold">{product.p_name}</h3>
+                  <p className="text-gray-700">{product.description}</p>
+                  <p className="text-gray-800 font-bold mt-2">${product.price}</p>
+                  <button
+                    className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                    onClick={() => alert("Product added to cart!")}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-        <div className="p-3 bg-gray-900 flex">
-          <input
-            type="text"
-            className="flex-grow p-2 rounded-l-lg bg-gray-700 text-white border-none outline-none"
-            placeholder="Type a message..."
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
-          />
-          <button onClick={sendMessage} className="bg-blue-500 p-3 rounded-r-lg">
-            <PaperAirplaneIcon className="h-5 w-5 text-white" />
-          </button>
-        </div>
+      )}
+
+      {/* Input Area */}
+      <div className="bg-gray-100 p-4 flex border-t border-gray-200">
+        <input
+          type="text"
+          className="flex-grow p-3 rounded-l-lg focus:outline-none"
+          placeholder="Ask about outfits, styles, or product details..."
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <button
+          className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 rounded-r-lg"
+          onClick={sendMessage}
+        >
+          Send
+        </button>
       </div>
     </div>
   );
