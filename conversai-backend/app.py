@@ -47,7 +47,7 @@ def chat():
     response = co.generate(
         model="command",  # Change to your desired model if needed
         prompt=final_prompt,
-        max_tokens=150,
+        max_tokens=250,
         temperature=0.7
     )
     ai_text = response.generations[0].text.strip()
