@@ -1,46 +1,43 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import axios from "axios";
+import { CartContext } from "../context/CartContext";
+
+// Define the initial message as a constant.
+const initialMessage = {
+  sender: "bot",
+  text: "👋 Hi there! I'm ConversAI, your personal fashion assistant. How can I help you today?",
+  recommendedProducts: [],
+};
 
 function Chatbot() {
-  const [messages, setMessages] = useState([
-    {
-      sender: "bot",
-      text: "👋 Hi there! I'm ConversAI, your personal fashion assistant. How can I help you today?",
-      images: [],
-    },
-  ]);
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("chatMessages");
+    return saved ? JSON.parse(saved) : [initialMessage];
+  });
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
-  const [recommendedProducts, setRecommendedProducts] = useState([]);
   const messagesEndRef = useRef(null);
+  const { addToCart } = useContext(CartContext);
+
+  // Persist chat messages to localStorage whenever they change.
+  useEffect(() => {
+    localStorage.setItem("chatMessages", JSON.stringify(messages));
+  }, [messages]);
 
   // Auto-scroll to the bottom when messages update
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const addMessage = (sender, text, images = []) => {
-    setMessages((prev) => [...prev, { sender, text, images }]);
+  // Clear chat history handler
+  const handleClearChat = () => {
+    setMessages([initialMessage]);
+    localStorage.removeItem("chatMessages");
   };
 
-  // Use user input as the query for recommendations
-  const extractQuery = (text) => text.toLowerCase();
-
-  // Fetch matching product recommendations from backend
-  const fetchRecommendations = async (query) => {
-    try {
-      const res = await axios.get("http://127.0.0.1:5050/api/recommendations", {
-        params: { query },
-      });
-      if (res.data && res.data.products) {
-        setRecommendedProducts(res.data.products);
-      } else {
-        setRecommendedProducts([]);
-      }
-    } catch (error) {
-      console.error("Error fetching recommendations:", error);
-      setRecommendedProducts([]);
-    }
+  // Add a new message to the chat history
+  const addMessage = (sender, text, recommendedProducts = []) => {
+    setMessages((prev) => [...prev, { sender, text, recommendedProducts }]);
   };
 
   const sendMessage = async () => {
@@ -54,20 +51,12 @@ function Chatbot() {
       const res = await axios.post("http://127.0.0.1:5050/chat", {
         message: userInput,
       });
-      const { response, images } = res.data;
-      addMessage("bot", response, images);
-
-      // Use the user input as the query to filter available products.
-      const query = extractQuery(userInput);
-      if (query) {
-        await fetchRecommendations(query);
-      } else {
-        setRecommendedProducts([]);
-      }
+      const { response, recommendedProducts } = res.data;
+      // Pass the recommendedProducts directly into the bot's message
+      addMessage("bot", response, recommendedProducts);
     } catch (error) {
       console.error("Error contacting backend:", error);
       addMessage("bot", "❌ Sorry, something went wrong on my end.", []);
-      setRecommendedProducts([]);
     } finally {
       setIsTyping(false);
     }
@@ -81,9 +70,15 @@ function Chatbot() {
 
   return (
     <div className="max-w-3xl mx-auto my-8 bg-white rounded-xl shadow-lg overflow-hidden">
-      {/* Chat Header */}
-      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center p-6 font-bold text-2xl">
-        ConversAI Fashion Chat
+      {/* Chat Header with Clear Chat Button */}
+      <div className="flex justify-between items-center bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
+        <span className="font-bold text-2xl">ConversAI Fashion Chat</span>
+        <button
+          onClick={handleClearChat}
+          className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+        >
+          Clear Chat
+        </button>
       </div>
 
       {/* Chat Messages */}
@@ -91,7 +86,9 @@ function Chatbot() {
         {messages.map((msg, idx) => (
           <div
             key={idx}
-            className={`flex items-start ${msg.sender === "bot" ? "justify-start" : "justify-end"}`}
+            className={`flex items-start ${
+              msg.sender === "bot" ? "justify-start" : "justify-end"
+            }`}
           >
             {msg.sender === "bot" && (
               <img
@@ -108,6 +105,40 @@ function Chatbot() {
               }`}
             >
               {msg.text}
+              {msg.recommendedProducts &&
+                msg.recommendedProducts.length > 0 && (
+                  <div className="mt-4 grid grid-cols-1 gap-4">
+                    {msg.recommendedProducts.map((product) => (
+                      <div
+                        key={product.id}
+                        className="flex items-center space-x-4 border p-4 rounded shadow"
+                      >
+                        <img
+                          src={product.picture_url}
+                          alt={product.p_name}
+                          className="w-24 h-24 object-cover rounded"
+                        />
+                        <div>
+                          <h3 className="text-2xl font-semibold">
+                            {product.p_name}
+                          </h3>
+                          <p className="text-gray-700">
+                            {product.description}
+                          </p>
+                          <p className="text-gray-800 font-bold mt-2">
+                            ${product.price}
+                          </p>
+                          <button
+                            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                            onClick={() => addToCart(product)}
+                          >
+                            Add to Cart
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
             </div>
           </div>
         ))}
@@ -127,35 +158,6 @@ function Chatbot() {
         )}
         <div ref={messagesEndRef} />
       </div>
-
-      {/* Recommended Products Section */}
-      {recommendedProducts.length > 0 && (
-        <div className="p-6 bg-gray-100 border-t border-gray-300">
-          <h2 className="text-xl font-bold mb-4">Recommended Products</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {recommendedProducts.map((product) => (
-              <div key={product.id} className="flex items-center space-x-4 border p-4 rounded shadow">
-                <img
-                  src={product.picture_url}
-                  alt={product.p_name}
-                  className="w-24 h-24 object-cover rounded"
-                />
-                <div>
-                  <h3 className="text-2xl font-semibold">{product.p_name}</h3>
-                  <p className="text-gray-700">{product.description}</p>
-                  <p className="text-gray-800 font-bold mt-2">${product.price}</p>
-                  <button
-                    className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-                    onClick={() => alert("Product added to cart!")}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Input Area */}
       <div className="bg-gray-100 p-4 flex border-t border-gray-200">
