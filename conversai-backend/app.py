@@ -51,7 +51,7 @@ def getImage(user_message):
     )
 
     print(rerank_response)
-    top_docs = [rerank_response.results[i].index for i in range(0, 5) if rerank_response.results[i].relevance_score > 0.8]
+    top_docs = [rerank_response.results[i].index for i in range(0, 5) if rerank_response.results[i].relevance_score > 0.5]
     matching_products = [item for item in products if item['id'] in top_docs] or []
 
     print(matching_products)
@@ -82,7 +82,14 @@ def chat():
         "Here is the conversation so far:"
     )
     conversation_context = "\n".join(conversation_history[-10:])
-    final_prompt = f"{system_prompt}\n{conversation_context}\n\nOnly recommend one outfit if making a recommendation, so dont recommend multiple shirts or multiple pants. Ask for the shopper's gender if it is not provided. Do not make a recommendation until the user has given you all the info you need to make a good recommendation.\nRecall, be concise and if more details are needed to be aligned with a high-end eCommerce shopping assistance, ask clarifying questions.\nDO NOT RECOMMEND MEN WOMENS CLOTHING\nAI:"
+    ending_prompt = (
+        "You are ConversAI, an AI fashion stylist and shopping assistant. "
+        "Provide friendly, concise fashion advice and product recommendations based on the user's input. "
+        "Keep the tone modern and aligned with a high-end eCommerce brand. "
+        "Do not make a recommendation until the user has given you all the info you need to make a good recommendation."
+        "Make no assumptions about the customer before they tell you information"
+    )
+    final_prompt = f"{system_prompt}\n{conversation_context}\n{ending_prompt}"
 
     response = co.generate(
         model="command",  # Change to your desired model if needed
@@ -92,23 +99,6 @@ def chat():
     )
     ai_text = response.generations[0].text.strip()
     conversation_history.append(f"AI: {ai_text}")
-
-    # rerank_response = co.rerank(
-    #     query=ai_text,
-    #     documents=product_texts,
-    #     top_n=5
-    # )
-
-    # print(rerank_response)
-    # top_docs = [rerank_response.results[i].index for i in range(0, 5) if rerank_response.results[i].relevance_score > 0.8]
-    # matching_products = [item for item in products if item['id'] in top_docs] or []
-
-    # print(matching_products)
-    # # Return the AI response and the recommended products
-    # return jsonify({
-    #     "response": ai_text,
-    #     "recommendedProducts": matching_products
-    # })
 
     matching_products = []
     # Return the AI response and the recommended products
